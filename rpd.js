@@ -164,4 +164,4 @@ function sortRows() {
 }
 
 var sort = ""
-changeSort('name');
+changeSort('netWorth');
