@@ -1,3 +1,4 @@
+//data for all rich people
 var richPeopleData = {"people": [{
 "id": 69420,
 "name": "Bill Gates",
