@@ -389,4 +389,4 @@ function addPerson() {
 }
 
 var sort = ""
-changeSort('name');
+changeSort('netWorth');
