@@ -1,0 +1,33 @@
+PEOPLE 
+//order: id, name, netWorth, occupation, chonkiness, companies, alphaLevel, attractiveness
+69420, Bill Gates, 1.1e11, rich, 5, [12345], 2, 10,
+89564, Jeff Bezos,1.1e11,CEO of Amazon,10,[23456,88888],8,6,
+50568,Warren Buffett,8.7e10,makes money,9,[89012],7,6,
+07984,Bernard Arnault,1.0e11,CEO boi,5,[90123],3,3,
+94406,Mark Zuckerberg,7.4e10,not being a robot,6,[67890],10,3,
+16131,Amancio Ortega,7.7e10,fashion dude,3,[01234],3,0,
+35029,Larry Ellison,6.9e10,having a fine mustache,3,[78901],7,7,
+56544,Donald Trump,3.1e9,professional tweeter,9001,[15973],69,-1000000000,
+86243,Larry Page,5.7e10,unemployed,5,[56789],2,2,
+09138,Carlos Slim,7.6e10,being slim,1,[13579],2,1,
+98254,Mukesh Ambani,6.1e10,business man,10,[24680],8,7,
+45233,Sergey Brin,5.3e10,google,10,[56789],8,10,
+PSTOP
+
+COMPANY 
+//order: id, name, stonks, employees, description
+12345, microsoft, 33243224432, 1.5e5, making computers and windows,
+23456,amazon,6.9e12,7.5e5,not paying taxes,
+34567,apple,3.8e13,1.3e5,iPhone2049S SE+ with thirteen additional cameras,
+45678,tesla,3.9e10,4.5e4,electric bots,
+56789,google,4.8e12,1.0e5,big brother,
+67890,facebook,2.6e10,4.0e4,like a book with faces,
+78901,oracle,1.4e11,1.4e6,2 million devices,
+15973,Trump Sales and Leasing,4.2e11,3000,sells things with Trump’s name on it,
+89012,berkshire hathaway,4.2e11,389000,stonks,
+90123,LVMH moet hennessy,4.2e11,136000,rich french bois,
+01234,zara,4.2e11,174000,dress me up like one of your french girls,
+13579,america movil,4.2e11,189000,el telecom de meheeko,
+24680,reliance limited,4.2e11,29000,rich indian bois that aren’t in comp sci,
+88888,blue origin,4.2e11,2600,spaaaaccccceeee,
+CSTOP
