@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <!-- makes the       webpage respond to resizing -->
+    <meta charset="UTF-8">
+    <link rel = "icon" href = "https://pics.clipartpng.com/midle/Wads_of_Dollars_PNG_Clipart-666.png">
+    <title>Rich People Database</title>
+    <script defer type="text/javascript" src="rpd.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+      .cellHover:hover {
+        background-color: #cccccc;
+        color: #000000;
+        /*text-decoration: underline;*/
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style = "font-size:30px; margin-bottom: 5px;">Rich People</h1>
+    <button onclick="populateTable()" style = "margin-bottom: 15px;">Refresh</button>
+    <table id="table" style="width:100%" border="1">
+          <tr>
+            <th id="Name" class = "cellHover" onclick = "changeSort('name')">Name</th>
+            <th id="Net Worth" class = "cellHover" onclick = "changeSort('netWorth')">Net Worth</th>
+            <th id="Occupation" class = "cellHover" class = "cellHover" onclick = "changeSort('occupation')">Occupation</th>
+            <th id="Chonkiness" class = "cellHover" onclick = "changeSort('chonkiness')">Chonkiness</th>
+            <th id="Companies" class = "cellHover" onclick = "changeSort('companies')">Companies</th>
+            <th id="Alpha Level" class = "cellHover" onclick = "changeSort('alphaLevel')">Alpha Level</th>
+            <th id="Attractiveness" class = "cellHover" onclick = "changeSort('attractiveness')">Attractiveness</th>
+          </tr>
+  </table>
+  <p id = "troubleshoot"></p>
