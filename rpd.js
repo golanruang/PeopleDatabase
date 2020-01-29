@@ -386,6 +386,7 @@ function addPerson() {
   var att = document.getElementById("attInput").value;
   richPeopleData["people"].push({"id":id,"name":nm,"netWorth":nw,"occupation":occ,"chonkiness":chk,"companies":[comp],"alphaLevel":al,"attractiveness":att,},)
   updateTable();
+	localStorage.setItem('richPeopleData',)
 }
 
 var sort = ""
