@@ -20,6 +20,7 @@
   <body>
     <h1 style = "font-size:30px; margin-bottom: 5px;">Rich People</h1>
     <button onclick="populateTable()" style = "margin-bottom: 15px;">Refresh</button>
+    <!-- Making the table -->
     <table id="table" style="width:100%" border="1">
       <tr>
         <th id="Name" class = "cellHover" onclick = "changeSort('name')">Name</th>
@@ -33,6 +34,7 @@
     </table>
     <p id = "troubleshoot"></p>
 
+    <!-- Letting people input data -->
     <form>
       <h2>Name:</h2>
       <input type="text" id="nmInput"><br>
@@ -49,7 +51,7 @@
       <h2>Attractiveness:</h2>
       <input type="text" id="attInput"><br>
     </form>
-
+    <!-- Button to add a person to the table -->
     <button style="margin-top:40px;" onclick="addPerson()"><h1>Add Person</h1></button>
 
   </body>
