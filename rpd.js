@@ -25,7 +25,6 @@ function convExp(string) {
 
 
 
-
 function convExp(string) {
 	var eFound = False
 	var preE = ""
