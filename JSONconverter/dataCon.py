@@ -1,5 +1,3 @@
-from os.path import isfile
-
 def convertData():
     dataHold = []
     dataTemp = ""
