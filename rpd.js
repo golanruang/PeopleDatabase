@@ -1,3 +1,5 @@
+
+/*
 function convExp(string) {
   var beginInt = string.substring(0,3);
   var beginExp = "";
@@ -10,6 +12,7 @@ function convExp(string) {
         beginExp += string[x];
       }
     }*/
+/*
   beginExp = string.substring(4,string.length)
   var int = parseInt(beginInt);
   var exp = parseInt(beginExp);
@@ -18,8 +21,10 @@ function convExp(string) {
   return valueInt;
   //}
 };
+*/
 
-/*
+
+
 
 function convExp(string) {
 	var eFound = False
@@ -28,8 +33,8 @@ function convExp(string) {
 	var i = 0
 	while (e==False) {
 		if (string[i] == "e") {
-			preE = string.substring(0,i-1)
-			postE = string.substring(i+1,string.length)
+			preE = parseInt(string.substring(0,i-1))
+			postE = parseInt(string.substring(i+1,string.length))
 			break
 	}
 }
@@ -38,7 +43,7 @@ function convExp(string) {
 
 }
 
-*/
+
 
 function addCommasToInt(int) {
     var intString = int.toString();
