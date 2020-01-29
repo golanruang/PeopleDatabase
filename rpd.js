@@ -231,6 +231,27 @@ function convExp(string) {
   //}
 };
 
+/*
+
+function convExp(string) {
+	var eFound = False
+	var preE = ""
+	var postE = ""
+	var i = 0
+	while (e==False) {
+		if (string[i] == "e") {
+			preE = string.substring(0,i-1)
+			postE = string.substring(i+1,string.length)
+			break
+	}
+}
+	var value = preE * Math.pow(10,postE)
+
+
+}
+
+*/
+
 function addCommasToInt(int) {
     var intString = int.toString();
     var stringWithCommas = intString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -378,7 +399,7 @@ function sortRows() {
 function addPerson() {
   var id = Math.floor(Math.random()*90000) + 10000;
   var nm = document.getElementById("nmInput").value;
-  var nw = convExp(document.getElementById("nwInput").value);
+  var nw = document.getElementById("nwInput").value;
   var occ = document.getElementById("occInput").value;
   var chk = document.getElementById("chkInput").value;
   var comp = document.getElementById("compInput").value;
