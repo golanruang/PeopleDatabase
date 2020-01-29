@@ -378,7 +378,7 @@ function sortRows() {
 function addPerson() {
   var id = Math.floor(Math.random()*90000) + 10000;
   var nm = document.getElementById("nmInput").value;
-  var nw = document.getElementById("nwInput").value;
+  var nw = convExp(document.getElementById("nwInput").value);
   var occ = document.getElementById("occInput").value;
   var chk = document.getElementById("chkInput").value;
   var comp = document.getElementById("compInput").value;
