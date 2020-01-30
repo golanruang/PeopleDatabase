@@ -224,11 +224,11 @@ function expToTextDescription(string) {
   exponent = parseInt(exponent);
   if(exponent >= 9) {
     if(exponent >= 10) {
-      var billions = number * (Math.pow(10, exponent % 3));
+      var billions = parseInt(number * (Math.pow(10, exponent % 3)));
     } else if (exponent == 9){
       var billions = number;
     }
-    var string = parseInt(billions) + " billion"
+    var string = billions + " billion"
   }
   return string
 }
