@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    <!-- makes the webpage respond to resizing -->
     <meta charset="UTF-8">
     <link rel = "icon" href = "https://pics.clipartpng.com/midle/Wads_of_Dollars_PNG_Clipart-666.png">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
     <title>Rich People Database</title>
     <script src="data.js"></script>
     <script defer type="text/javascript" src="rpd.js"></script>
@@ -12,9 +13,27 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <style>
       .cellHover:hover {
-        background-color: #cccccc;
+        background-color: rgba(133, 187, 101, 1);
         color: #000000;
         /*text-decoration: underline;*/
+      }
+      table {
+        border-collapse: collapse;
+        border: 1px solid black;
+      }
+      th {
+        background-color: rgba(133, 187, 101, 0.3);
+        color: #000000;
+
+      }
+      th, td {
+        padding-left: 3px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        font-size: 18px;
+      }
+      h1, th, td {
+        font-family: 'Lato'
       }
       body {
         background-image: url("https://cdn.theatlantic.com/assets/media/img/mt/2016/09/RTX1GZCO/lead_720_405.jpg?mod=1533691850");
@@ -24,18 +43,17 @@
     </style>
   </head>
   <body>
-    <div class="jumbotron" style="background:rgba(200, 200, 200, 0.375); margin-bottom:-10px;">
-      <h1 style = "font-size:30px; margin-bottom: 5px;">Rich People</h1>
-      <button onclick="populateTable()" style = "margin-bottom: 15px;">Refresh</button>
-      <table id="table" style="width:100%" border="1">
+    <div class="jumbotron" style="background:rgba(255, 255, 255, 0.75); margin-bottom: -10px; margin-left: 8px; padding: 12px; padding-top: 0px;">
+      <h1 style = "font-size:30px; margin-bottom: 5px; padding-top: 5px;">Rich People</h1>
+      <table id="table" border="1" style = "margin-left: 20px; margin-top: 5px;">
         <tr>
-          <th id="Name" class = "cellHover" onclick = "changeSort('name')">Name</th>
-          <th id="Net Worth" class = "cellHover" onclick = "changeSort('netWorth')">Net Worth</th>
-          <th id="Occupation" class = "cellHover" class = "cellHover" onclick = "changeSort('occupation')">Occupation</th>
-          <th id="Chonkiness" class = "cellHover" onclick = "changeSort('chonkiness')">Chonkiness</th>
-          <th id="Companies" class = "cellHover" onclick = "changeSort('companies')">Companies</th>
-          <th id="Alpha Level" class = "cellHover" onclick = "changeSort('alphaLevel')">Alpha Level</th>
-          <th id="Attractiveness" class = "cellHover" onclick = "changeSort('attractiveness')">Attractiveness</th>
+          <th id="Name" class = "cellHover" style = "width: 200px;" onclick = "changeSort('name')">Name</th>
+          <th id="Net Worth" class = "cellHover" style = "width: 150px;" onclick = "changeSort('netWorth')">Net Worth</th>
+          <th id="Occupation" class = "cellHover" style = "width: 300px;" class = "cellHover" onclick = "changeSort('occupation')">Occupation</th>
+          <th id="Chonkiness" class = "cellHover" style = "width: 100px;" onclick = "changeSort('chonkiness')">Chonkiness</th>
+          <th id="Companies" class = "cellHover" style = "width: 300px;" onclick = "changeSort('companies')">Companies</th>
+          <th id="Alpha Level" class = "cellHover" style = "width: 100px;" onclick = "changeSort('alphaLevel')">Alpha Level</th>
+          <th id="Attractiveness" class = "cellHover" style = "width: 150px;" onclick = "changeSort('attractiveness')">Attractiveness</th>
         </tr>
       </table>
       <p id = "troubleshoot"></p>
