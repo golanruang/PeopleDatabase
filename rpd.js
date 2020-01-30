@@ -12,7 +12,7 @@ function convExp(string) {
     }*/
 
   beginExp = string.substring(4,string.length)
-  var int = parseInt(beginInt);
+  var int = parseFloat(beginInt);
   var exp = parseInt(beginExp);
   var value = int * Math.pow(10, exp);
   var valueInt = parseInt(value)
@@ -59,7 +59,11 @@ function updateTable() {
     var cell6 = row.insertCell(5);
     var cell7 = row.insertCell(6);
     cell1.innerHTML = item.name;
-    cell2.innerHTML = addCommasToInt(convExp(item.netWorth));
+    if(document.getElementById("scientificNotationCheckbox").checked == false) {
+      cell2.innerHTML = addCommasToInt(convExp(item.netWorth));
+    } else {
+      cell2.innerHTML = expToTextDescription(item.netWorth);
+    }
     cell3.innerHTML = item.occupation;
     if(item.chonkiness > 9000) {
       cell4.innerHTML = "over 9000";
@@ -195,6 +199,38 @@ function addPerson() {
   richPeopleData["people"].push({"id":id,"name":nm,"netWorth":nw,"occupation":occ,"chonkiness":chk,"companies":[comp],"alphaLevel":al,"attractiveness":att,},)
   updateTable();
 	localStorage.setItem('richPeopleData',)
+}
+
+function expandScientificNotation(string) {
+  if(string.substring(3, 4) == 'e') {
+    var number = string.substring(0, 3);
+    var exponent = string.substring(4);
+  } else {
+    var number = string.substring(0, 1);
+    var exponent = string.substring(2);
+  }
+  return number + " * 10" + exponent.sup();
+}
+
+function expToTextDescription(string) {
+  if(string.substring(3, 4) == 'e') {
+    var number = string.substring(0, 3);
+    var exponent = string.substring(4);
+  } else {
+    var number = string.substring(0, 1);
+    var exponent = string.substring(2);
+  }
+  number = parseFloat(number);
+  exponent = parseInt(exponent);
+  if(exponent >= 9) {
+    if(exponent >= 10) {
+      var billions = number * (Math.pow(10, exponent % 3));
+    } else if (exponent == 9){
+      var billions = number;
+    }
+    var string = parseInt(billions) + " billion"
+  }
+  return string
 }
 
 var sort = ""
