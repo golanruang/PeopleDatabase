@@ -17,7 +17,7 @@
     <video autoplay muted loop class = "backgroundVideo background" id="moneyVideo" onclick = "exitCompanyWindow()">
       <source src="assets/moneyrainingv2.mp4" type="video/mp4">               <!-- making gorgeous background -->
     </video>
-    <div class="jumbotron whitebackground" style="position: relative; margin-bottom: -10px; margin-left: 8px; margin-top: 8px; padding-right: 30px; padding-top: 0px; padding-bottom: 30px; padding-left: 17px;" id = "mainJumbotron">
+    <div class="jumbotron whitebackground" style="position: relative; margin-bottom: -10px; margin-left: 8px; margin-top: 8px; padding-right: 30px; padding-top: 1px; down: 10px; padding-bottom: 30px; padding-left: 17px;" id = "mainJumbotron">
       <h1 style = "font-size:30px; margin-bottom: 5px; padding-top: 0px; margin-top: 11px;">Rich People</h1>
       <table id="table" border="1" style = "margin-left: 20px; margin-top: 10px;">
         <tr>                                                                  <!-- table for all the info -->
@@ -32,17 +32,17 @@
       </table>
       <form>
         <th><h2>Name:</h2><input type="text" id="nmInput"><br></th>
-        <th><h2>Net Worth:</h2><input type="text" id="nwInput"><br></th>
+        <th><h2>Net Worth: $</h2><input type="number" id="nwInput"><br></th>
         <th><h2>Occupation:</h2><input type="text" id="occInput"><br></th>
-        <th><h2>Chonkiness:</h2><input type="text" id="chkInput"><br></th>
+        <th><h2>Chonkiness:</h2><input type="number" id="chkInput"><br></th>
         <th><h2>Companies:</h2><input type="text" id="compInput"><br></th>
-        <th><h2>Alpha Level:</h2><input type="text" id="alInput"><br></th>
-        <th><h2>Attractiveness:</h2><input type="text" id="attInput"><br></th>
+        <th><h2>Alpha Level:</h2><input type="number" id="alInput"><br></th>
+        <th><h2>Attractiveness:</h2><input type="number" id="attInput"><br></th>
       </form>
 
       <button style="margin-top:40px;" onclick="addPerson()"><h1>Add Person</h1></button>
   </div>
-  <div class="jumbotron invisible offscreen" style = "position:fixed; width:500px; background: white; padding: 10px; padding-top: 0px; margin-top: 9px; padding-left: 12px;" id = "companyInfo">
+  <div class="jumbotron invisible offscreen" style = "position:fixed; width:500px; background: white; padding: 10px; padding-top: 0px; margin-top: 7px; padding-left: 12px;" id = "companyInfo">
     <img src="" class = "center companyLogo" id = "companyLogo"></img>
     <h1 id = "companyName" style = "margin-bottom: 0px; margin-left: 10px;"></h1>
     <p id = "companyStonks" style = "margin-left: 30px;"></p>

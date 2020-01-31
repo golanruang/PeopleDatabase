@@ -99,8 +99,8 @@ function findCompanyByName(nameToFind) {
   */
   var toReturn = []
   richPeopleData["companies"].forEach(function(company) {
-    if(company.name == nameToFind) {          // if company's name is the name you want
-      toReturn = [company.name, company.stonks, company.employees, company.description, company.logo, company.wikiPage, company.stonksCode];
+    if(company.name.toUpperCase() == nameToFind.toUpperCase()) {          // if company's name is the name you want
+      toReturn = [company.id, company.name, company.stonks, company.employees, company.description, company.logo, company.wikiPage, company.stonksCode];
     }
   });
   return toReturn;
@@ -197,18 +197,25 @@ function sortRows() {
 
 function addPerson() {                        //collecting all the information for the rich person
   var id = Math.floor(Math.random()*90000) + 10000;
-  var nm = document.getElementById("nmInput").value;
-  var nw = document.getElementById("nwInput").value;
+  var nm = capitalizeWords(document.getElementById("nmInput").value);
+  var nw = intToScientificNotation(document.getElementById("nwInput").value);
   var occ = document.getElementById("occInput").value;
   var chk = document.getElementById("chkInput").value;
-  var comp = document.getElementById("compInput").value;
+  var comp = findCompanyByName(document.getElementById("compInput").value)[0];
   var al = document.getElementById("alInput").value;
   var att = document.getElementById("attInput").value;
 
   //pushing the json object of the person to the database and updating table
   richPeopleData["people"].push({"id":id,"name":nm,"netWorth":nw,"occupation":occ,"chonkiness":chk,"companies":[comp],"alphaLevel":al,"attractiveness":att,},)
   updateTable();
-	localStorage.setItem('richPeopleData',)
+	localStorage.setItem('richPeopleData', richPeopleData)
+  document.getElementById("nmInput").value = "";
+  document.getElementById("nwInput").value = null;
+  document.getElementById("occInput").value = "";
+  document.getElementById("chkInput").value = null;
+  document.getElementById("compInput").value = "";
+  document.getElementById("alInput").value = null;
+  document.getElementById("attInput").value = null;
 }
 
 function expandScientificNotation(string) {
@@ -241,6 +248,16 @@ function expToTextDescription(string) {
     var string = billions + " billion"
   }
   return string
+}
+
+function intToScientificNotation(toConvert) {
+  var float = parseFloat(toConvert);
+  var numTens = 0;
+  while(float > 10) {
+    float = float/10;
+    numTens += 1;
+  }
+  return float.toFixed(1) + "e" + numTens;
 }
 
 function displayCompany(companyId) {
