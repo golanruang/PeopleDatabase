@@ -190,12 +190,12 @@ function sortRows() {
       sortedArray.push(people[rowIndexes[l]]); //adds rows to sorted rows array
     }
   }
-  richPeopleData["people"] = sortedArray; //updating table to sorted table
+  richPeopleData["people"] = sortedArray;     //updating table to sorted table
   console.log(sortedArray)
   updateTable();
 }
 
-function addPerson() {
+function addPerson() {                        //collecting all the information for the rich person
   var id = Math.floor(Math.random()*90000) + 10000;
   var nm = document.getElementById("nmInput").value;
   var nw = document.getElementById("nwInput").value;
@@ -204,6 +204,8 @@ function addPerson() {
   var comp = document.getElementById("compInput").value;
   var al = document.getElementById("alInput").value;
   var att = document.getElementById("attInput").value;
+
+  //pushing the json object of the person to the database and updating table
   richPeopleData["people"].push({"id":id,"name":nm,"netWorth":nw,"occupation":occ,"chonkiness":chk,"companies":[comp],"alphaLevel":al,"attractiveness":att,},)
   updateTable();
 	localStorage.setItem('richPeopleData',)
