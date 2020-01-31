@@ -1,6 +1,7 @@
 var inCompanyIframe = false;
 var sort = ""
 var wikipediaUrl = ""
+var stonksCode;
 changeSort('name')
 
 function convExp(string) {
@@ -64,11 +65,7 @@ function updateTable() {
     var cell6 = row.insertCell(5);
     var cell7 = row.insertCell(6);
     cell1.innerHTML = item.name;
-    if(document.getElementById("scientificNotationCheckbox").checked == false) {
-      cell2.innerHTML = addCommasToInt(convExp(item.netWorth));
-    } else {
-      cell2.innerHTML = expToTextDescription(item.netWorth);
-    }
+    cell2.innerHTML = addCommasToInt(convExp(item.netWorth)) + " (" + expToTextDescription(item.netWorth) + ")";
     cell3.innerHTML = item.occupation;
     if(item.chonkiness > 9000) {
       cell4.innerHTML = "over 9000";
@@ -104,7 +101,7 @@ function findCompany(idToFind) {
   var toReturn = []
   richPeopleData["companies"].forEach(function(company) {
     if(company.id == idToFind) {
-      toReturn = [company.id, company.name, company.stonks, company.employees, company.description, company.logo, company.wikiPage];
+      toReturn = [company.id, company.name, company.stonks, company.employees, company.description, company.logo, company.wikiPage, company.stonksCode];
     }
   });
   return toReturn;
@@ -114,7 +111,7 @@ function findCompanyByName(nameToFind) {
   var toReturn = []
   richPeopleData["companies"].forEach(function(company) {
     if(company.name == nameToFind) {
-      toReturn = [company.name, company.stonks, company.employees, company.description, company.logo, company.wikiPage];
+      toReturn = [company.name, company.stonks, company.employees, company.description, company.logo, company.wikiPage, company.stonksCode];
     }
   });
   return toReturn;
@@ -253,13 +250,10 @@ function displayCompany(companyId) {
   inCompanyIframe = true;
   document.getElementById('moneyVideo').className = "backgroundVideo fade";
   document.getElementById('mainJumbotron').className = "jumbotron graybackground";
-  document.getElementById('companyInfo').className = "jumbotron";
+  document.getElementById('companyInfo').className = "jumbotron onscreen";
 
   var companyInfo = findCompany(companyId)
   document.getElementById('companyLogo').src = companyInfo[5];
-  document.getElementById('companyLogo').style.width = "400px";
-  document.getElementById('companyLogo').style.left = "40px";
-  document.getElementById('companyLogo').style.padding = "10px";
   document.getElementById('companyLogo').className = "companyLogo center"
 
   document.getElementById("companyName").innerHTML = capitalizeWords(companyInfo[1]);
@@ -267,10 +261,25 @@ function displayCompany(companyId) {
   document.getElementById("companyEmployees").innerHTML = "Employees: " + addCommasToInt(convExp(companyInfo[3])) + " employees";
   document.getElementById('companyDescription').innerHTML = "Description: " + companyInfo[4];
   wikipediaUrl = companyInfo[6];
+  if(stonksCode != "N/A") {
+    document.getElementById("seeStonks").className = ""
+    document.getElementById("seeStonks").style.opacity = 1.0;
+    stonksCode = companyInfo[7];
+  } else {
+    document.getElementById("seeStonks").className = "invisible"
+  }
 }
 
 function openWikiPage() {
   window.open(wikipediaUrl, '_blank');
+}
+
+function openStonksPage() {
+  if(stonksCode.substring(0, 4) != "http" && stonksCode != "N/A") {
+    window.open("https://finance.yahoo.com/quote/" + stonksCode, '_blank');
+  } else if(stonksCode.substring(0, 4) == "http") {
+    window.open(stonksCode, '_blank');
+  }
 }
 
 function exitCompanyWindow() {
@@ -278,6 +287,12 @@ function exitCompanyWindow() {
     inCompanyIframe = false;
     document.getElementById('moneyVideo').className = "backgroundVideo background";
     document.getElementById('mainJumbotron').className = "jumbotron whitebackground";
-    document.getElementById('companyInfo').className = "jumbotron invisible";
+    document.getElementById('companyInfo').className = "jumbotron invisible offscreen";
+
+    document.getElementById('companyLogo').src = "https://i5.walmartimages.com/asr/6d1014f4-682b-4720-818a-615f754e923d_1.ee2acf1cc97d6ac3258af5453afac656.jpeg";
+    document.getElementById("companyName").innerHTML = "";
+    document.getElementById('companyStonks').innerHTML = "";
+    document.getElementById("companyEmployees").innerHTML = "";
+    document.getElementById('companyDescription').innerHTML = "" ;
   }
 }

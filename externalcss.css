@@ -1,0 +1,135 @@
+.cellHover:hover {
+  background-color: rgba(133, 187, 101, 1);
+  color: #000000;
+  /*text-decoration: underline;*/
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  margin-top: 15px;
+  margin-left: 20px;
+  padding-bottom: 2px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.offscreen {
+  left: 100vw;
+}
+.onscreen {
+  left: 308.5px;
+}
+.backgroundVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.background {
+  opacity: 0.5;
+}
+.fade {
+  opacity: 0.25;
+}
+.companyLogo {
+  width: 400px;
+  align: center;
+  left: 50px;
+  padding-bottom: 0px;
+  margin-top: 10px;
+}
+.graybackground {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: rgba(0, 0, 0, 0.6);
+}
+.whitebackground {
+  background:rgba(255, 255, 255, 1);
+}
+.invisible {
+  opacity: 0;
+}
+.exitPopupButton {
+  position: relative;
+  background-color: #8D0337; /* Green */
+  left: 200px;
+  border: none;
+  color: white;
+  padding-top: 5.5px;
+  padding-bottom: 27.5px;
+  margin-bottom: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Lato';
+  height: 25px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+input[type="checkbox"]:not(:checked) + .slider {
+  background-color:  #4d4d4d;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+th {
+  background: rgba(133, 187, 101, 0.3);
+  color: #000000;
+}
+th, td {
+  padding: 3px;
+  font-size: 18px;
+}
+p, a, h1, th, td {
+  font-family: 'Lato'
+}
+body {
+  /*background-image: url(resources/donaldtrump.jpg);*/
+  background-repeat: no-repeat;
+  background-size: cover;
+}
