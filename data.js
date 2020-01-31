@@ -132,7 +132,7 @@ var richPeopleData = {
 			"attractiveness":"10",
 		},
 	],
-	"companies":[
+	"companies":[		//the list of company objects
 		{"id":12345,
 			"name":"microsoft",
 			"stonks":"3.3e10",
