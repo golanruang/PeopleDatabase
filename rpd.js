@@ -1,3 +1,7 @@
+var inCompanyIframe = false;
+var sort = ""
+changeSort('name')
+
 function convExp(string) {
   var beginInt = string.substring(0,3);
   var beginExp = "";
@@ -135,8 +139,6 @@ function capitalizeWords(words) {
 }
 
 function changeSort(newSort) {
-  sort = "name";
-  sortRows();
   sort = newSort;
   sortRows();
 }
@@ -156,7 +158,7 @@ function sortRows() {
       temp.push(item[sort].toLowerCase() + "," + i.toString());
     } else if (sort == "companies") {
       var companies = []
-        var companyName = findCompany(item.companies[0]);
+        var companyName = findCompany(item.companies[0])[1].toLowerCase();
         if(companyName != "") {
             temp.push(companyName + "," + i.toString());
         }
@@ -169,7 +171,6 @@ function sortRows() {
     i = i + 1;
   })
   temp.sort();
-  //document.getElementById("troubleshoot").innerHTML = temp;
   if(sort != "netWorth" && sort != "chonkiness" && sort != "alphaLevel" && sort != "attractiveness") {
     for (j = 0; j < temp.length; j++) {
       splitString = temp[j].split(",");
@@ -197,6 +198,7 @@ function sortRows() {
     }
   }
   richPeopleData["people"] = sortedArray;
+  console.log(sortedArray)
   updateTable();
 }
 
@@ -272,7 +274,3 @@ function exitCompanyWindow() {
     document.getElementById('companyInfo').className = "jumbotron invisible";
   }
 }
-
-var inCompanyIframe = false;
-var sort = ""
-changeSort('netWorth');

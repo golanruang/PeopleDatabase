@@ -221,5 +221,12 @@ var richPeopleData = {
 			"description":"spaaaaccccceeee",
 			'logo': 'https://i1.wp.com/spacenews360.com/wp-content/uploads/2017/12/blue-origin-logo.png?fit=985%2C522&ssl=1',
 		},
+		{"id":59270,
+		 "name":"spaceX",
+	 	 "stonks":"4.3e11",
+	 	 "employees":"7000",
+	   "description":"spaaaaccccceeee #2",
+		 'logo':'https://www.stickpng.com/assets/images/5842a770a6515b1e0ad75afe.png',
+	 },
 	]
 };
