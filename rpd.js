@@ -65,7 +65,7 @@ function updateTable() {
     var cell6 = row.insertCell(5);
     var cell7 = row.insertCell(6);
     cell1.innerHTML = item.name;
-    cell2.innerHTML = addCommasToInt(convExp(item.netWorth)) + " (" + expToTextDescription(item.netWorth) + ")";
+    cell2.innerHTML = "$" + addCommasToInt(convExp(item.netWorth)) + " ($" + expToTextDescription(item.netWorth) + ")";
     cell3.innerHTML = item.occupation;
     if(item.chonkiness > 9000) {
       cell4.innerHTML = "over 9000";
@@ -257,7 +257,7 @@ function displayCompany(companyId) {
   document.getElementById('companyLogo').className = "companyLogo center"
 
   document.getElementById("companyName").innerHTML = capitalizeWords(companyInfo[1]);
-  document.getElementById('companyStonks').innerHTML = "Stonks: $" + addCommasToInt(convExp(companyInfo[2])) + " (" + expToTextDescription(companyInfo[2]) + ")";
+  document.getElementById('companyStonks').innerHTML = "Stonks: $" + addCommasToInt(convExp(companyInfo[2])) + " ($" + expToTextDescription(companyInfo[2]) + ")";
   document.getElementById("companyEmployees").innerHTML = "Employees: " + addCommasToInt(convExp(companyInfo[3])) + " employees";
   document.getElementById('companyDescription').innerHTML = "Description: " + companyInfo[4];
   wikipediaUrl = companyInfo[6];

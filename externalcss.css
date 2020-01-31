@@ -99,6 +99,9 @@
   font-weight: bold;
   letter-spacing: 0.5px;
 }
+.externalLink {
+  cursor: pointer;
+}
 input[type="checkbox"]:not(:checked) + .slider {
   background-color:  #4d4d4d;
 }

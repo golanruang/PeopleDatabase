@@ -22,10 +22,10 @@
       <table id="table" border="1" style = "margin-left: 20px; margin-top: 10px;">
         <tr>
           <th id="Name" class = "cellHover" style = "width: 200px;" onclick = "changeSort('name')">Name</th>
-          <th id="Net Worth" class = "cellHover" style = "width: 250px;" onclick = "changeSort('netWorth')">Net Worth</th>
-          <th id="Occupation" class = "cellHover" style = "width: 300px;" class = "cellHover" onclick = "changeSort('occupation')">Occupation</th>
+          <th id="Net Worth" class = "cellHover" style = "width: 280px;" onclick = "changeSort('netWorth')">Net Worth</th>
+          <th id="Occupation" class = "cellHover" style = "width: 210px;" class = "cellHover" onclick = "changeSort('occupation')">Occupation</th>
           <th id="Chonkiness" class = "cellHover" style = "width: 100px;" onclick = "changeSort('chonkiness')">Chonkiness</th>
-          <th id="Companies" class = "cellHover" style = "width: 300px;" onclick = "changeSort('companies')">Companies</th>
+          <th id="Companies" class = "cellHover" style = "width: 250px;" onclick = "changeSort('companies')">Companies</th>
           <th id="Alpha Level" class = "cellHover" style = "width: 100px;" onclick = "changeSort('alphaLevel')">Alpha Level</th>
           <th id="Attractiveness" class = "cellHover" style = "width: 150px;" onclick = "changeSort('attractiveness')">Attractiveness</th>
         </tr>
@@ -42,8 +42,8 @@
     <p id = "companyStonks" style = "margin-left: 30px;"></p>
     <p id = "companyEmployees" style = "margin-left: 30px;"></p>
     <p id = "companyDescription" style = "margin-left: 30px;"></p>
-    <p id = "seeStonks" onclick = "openStonksPage()" style = "color: blue; text-decoration: underline; margin-left: 30px" href = "">See real stonks</p>
-    <p id = "moreInfo" onclick = "openWikiPage()" style = "color: blue; text-decoration: underline; margin-left: 30px; margin-top: -5px;" href = "">More info</p>
+    <a class = "externalLink"><p id = "seeStonks" class = "externalLink" onclick = "openStonksPage()" style = "color: blue; text-decoration: underline; margin-left: 30px; cursor: pointer;" href = "">See real stonks</p></a>
+    <a><p id = "moreInfo" class = "externalLink" onclick = "openWikiPage()" style = "color: blue; text-decoration: underline; margin-left: 30px; margin-top: -5px;" href = "">More info</p></a>
     <button id = "exitPopup" class = "exitPopupButton" onclick = "exitCompanyWindow()">Exit popup</button>
   </div>
   </body>
