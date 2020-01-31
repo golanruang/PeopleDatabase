@@ -71,34 +71,47 @@ function updateTable() {
       cell4.innerHTML = item.chonkiness;
     }
     var companies = [];
+    var companyIds = [];
     item.companies.forEach(function(item) {
-      var companyName = findCompany(item);
-      if(companyName != "") {
+      var companyInfo = findCompany(item);
+      if(companyInfo != "") {
         if(companies.length >= 0) {
-          companies.push(" " + companyName);
+          companies.push(" " + capitalizeWords(companyInfo[1]));
+          companyIds.push(companyInfo[0]);
         } else {
-          companies.push(companyName)
+          companies.push(capitalizeWords(companyInfo[1]))
+          companyIds.push(companyInfo[0]);
         }
       }
     })
     if (companies != []) {
       cell5.innerHTML = companies;
+      cell5.onclick = function() { displayCompany(companyIds[0]); };
     } else {
       cell5.innerHTML = "none"
     }
     cell6.innerHTML = item.alphaLevel;
-    cell7.innerHTML = item.attractiveness
+    cell7.innerHTML = item.attractiveness;
   });
 }
 
 function findCompany(idToFind) {
-  var toReturn = ""
+  var toReturn = []
   richPeopleData["companies"].forEach(function(company) {
     if(company.id == idToFind) {
-      toReturn = company.name;
+      toReturn = [company.id, company.name, company.stonks, company.employees, company.description, company.logo];
     }
   });
-  toReturn = capitalizeWords(toReturn);
+  return toReturn;
+}
+
+function findCompanyByName(nameToFind) {
+  var toReturn = []
+  richPeopleData["companies"].forEach(function(company) {
+    if(company.name == nameToFind) {
+      toReturn = [company.name, company.stonks, company.employees, company.description, company.logo];
+    }
+  });
   return toReturn;
 }
 
@@ -233,5 +246,33 @@ function expToTextDescription(string) {
   return string
 }
 
+function displayCompany(companyId) {
+  inCompanyIframe = true;
+  document.getElementById('moneyVideo').className = "backgroundVideo fade";
+  document.getElementById('mainJumbotron').className = "jumbotron graybackground";
+  document.getElementById('companyInfo').className = "jumbotron";
+
+  var companyInfo = findCompany(companyId)
+  document.getElementById('companyLogo').src = companyInfo[5];
+  document.getElementById('companyLogo').style.width = "400px";
+  document.getElementById('companyLogo').style.left = "40px";
+  document.getElementById('companyLogo').style.padding = "10px";
+  document.getElementById('companyLogo').className = "companyLogo center"
+  document.getElementById("companyName").innerHTML = capitalizeWords(companyInfo[1]);
+  document.getElementById('companyStonks').innerHTML = "Stonks: $" + addCommasToInt(convExp(companyInfo[2]));
+  document.getElementById("companyEmployees").innerHTML = "Employees: " + addCommasToInt(convExp(companyInfo[3])) + " employees";
+  document.getElementById('companyDescription').innerHTML = "Description: " + companyInfo[4];
+}
+
+function exitCompanyWindow() {
+  if(inCompanyIframe == true) {
+    inCompanyIframe = false;
+    document.getElementById('moneyVideo').className = "backgroundVideo background";
+    document.getElementById('mainJumbotron').className = "jumbotron whitebackground";
+    document.getElementById('companyInfo').className = "jumbotron invisible";
+  }
+}
+
+var inCompanyIframe = false;
 var sort = ""
 changeSort('netWorth');

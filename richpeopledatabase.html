@@ -53,14 +53,41 @@
         -webkit-transition: .4s;
         transition: .4s;
       }
-      .fullscreenVideo {
+      .backgroundVideo {
         position: fixed;
         right: 0;
         bottom: 0;
         min-width: 100%;
         max-width: 100%;
         min-height: 100%;
+      }
+      .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+      .background {
         opacity: 0.5;
+      }
+      .fade {
+        opacity: 0.25;
+      }
+      .companyLogo {
+        width: 400px;
+        align: center;
+        left: 50px;
+        padding-bottom: 0px;
+        margin-top: 10px;
+      }
+      .graybackground {
+        background-color: rgba(255, 255, 255, 0.6);
+      }
+      .whitebackground {
+        background:rgba(255, 255, 255, 1);
+      }
+      .invisible {
+        opacity: 0;
       }
       input[type="checkbox"]:not(:checked) + .slider {
         background-color:  #4d4d4d;
@@ -81,7 +108,7 @@
         border: 1px solid black;
       }
       th {
-        background-color: rgba(133, 187, 101, 0.3);
+        background: rgba(133, 187, 101, 0.3);
         color: #000000;
       }
       th, td {
@@ -99,10 +126,10 @@
     </style>
   </head>
   <body>
-    <video autoplay muted loop class = "fullscreenVideo" id="moneyVideo">
+    <video autoplay muted loop class = "backgroundVideo background" id="moneyVideo" onclick = "exitCompanyWindow()">
       <source src="resources/moneyrainingv2.mp4" type="video/mp4">
     </video>
-    <div class="jumbotron" style="background:rgba(255, 255, 255, 1); position: fixed; margin-bottom: -10px; margin-left: 8px; margin-top: 8px; padding-right: 18px; padding-top: 0px; padding-bottom: 0px; padding-left: 17px;">
+    <div class="jumbotron whitebackground" style="position: fixed; margin-bottom: -10px; margin-left: 8px; margin-top: 8px; padding-right: 18px; padding-top: 0px; padding-bottom: 0px; padding-left: 17px;" id = "mainJumbotron">
       <h1 style = "font-size:30px; margin-bottom: 5px; padding-top: 0px; margin-top: 11px;">Rich People</h1>
       <table id="table" border="1" style = "margin-left: 20px; margin-top: 10px;">
         <tr>
@@ -120,6 +147,14 @@
         <span class="slider round"></span>
       </label>
       <p style = "position: relative; top: -39px; left: 75px; margin-bottom:0px;">Net worth in text</p>
-    </div>
+  </div>
+  <div class="jumbotron invisible" style = "position:fixed; left:308.5px; width:500px; background: white; padding: 10px; padding-top: 0px; margin-top: 9px; padding-left: 12px;" id = "companyInfo">
+    <img src="" class = "center" id = "companyLogo"></img>
+    <h1 id = "companyName" style = "margin-bottom: 0px; margin-left: 10px;"></h1>
+    <p id = "companyStonks" style = "margin-left: 30px;"></p>
+    <p id = "companyEmployees" style = "margin-left: 30px;"></p>
+    <p id = "companyDescription" style = "margin-left: 30px;"></p>
+    <p id = "exitPopup" style = "font-size: 10px; text-align: center; padding-bottom: 0px; margin-bottom: 0px;">(Click outside this popup to exit)</p>
+  </div>
   </body>
 </html>
