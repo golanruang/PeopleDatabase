@@ -1,3 +1,8 @@
+/*
+Author: Lots of people
+Date: January 2020
+Purpose: js for richpeopledatabase; formats a bunch of stuff and accesses data from the json object
+*/
 var inCompanyIframe = false;
 var sort = ""
 var wikipediaUrl = ""
@@ -5,54 +10,32 @@ var stonksCode;
 changeSort('name')
 
 function convExp(string) {
+  /*
+  Converts num in scientific notation to regular integer notation
+  */
   var beginInt = string.substring(0,3);
   var beginExp = "";
-  /*for (i = 0; i < string.length; i++) {
-    if (string[i] != "e" || string[i] != "E") {
-      beginInt += string[i];
-    }
-    else {
-      for (x = i+1; x<string.length; x++){
-        beginExp += string[x];
-      }
-    }*/
-
-  beginExp = string.substring(4,string.length)
-  var int = parseFloat(beginInt);
+  beginExp = string.substring(4,string.length) // parses it at the e in the sci notation
+  var int = parseFloat(beginInt);              // splits it in half(1/2 int 1/2 num zeros)
   var exp = parseInt(beginExp);
-  var value = int * Math.pow(10, exp);
+  var value = int * Math.pow(10, exp);         // multiplies the decimal by how many e's it has
   var valueInt = parseInt(value)
-  return valueInt;
-  //}
+  return valueInt;                             // returns the integer form of scientific notation
 };
 
-//
-// function convExp(string) {
-// 	var eFound = false;
-// 	var preE = "";
-// 	var postE = "";
-// 	var i = 0;
-// 	while (eFound==false) {
-// 		if (string[i] == "e") {
-// 			preE = parseInt(string.substring(0,i-1));
-// 			postE = parseInt(string.substring(i+1,string.length));
-// 			break
-// 	}
-// 	i++;
-// }
-// 	var value = preE * Math.pow(10,postE)
-//
-//
-// }
-
 function addCommasToInt(int) {
+  /*
+  Adds commas to the integers (since they are very big numbers)
+  */
     var intString = int.toString();
     var stringWithCommas = intString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return stringWithCommas;
 }
 
 function updateTable() {
-  //var database = JSON.parse(richPeopleData);
+  /*
+  Update the data table every time we get the dat afor one rich boi
+  */
   clearTableRows();
   var table = document.getElementById("table");
   richPeopleData["people"].forEach(function(item) {
@@ -75,8 +58,8 @@ function updateTable() {
     var companies = [];
     var companyIds = [];
     item.companies.forEach(function(item) {
-      var companyInfo = findCompany(item);
-      if(companyInfo != "") {
+      var companyInfo = findCompany(item);    // find the company corresponding to a rich person
+      if(companyInfo != "") {                 // add the info + format it
         if(companies.length >= 0) {
           companies.push(" " + capitalizeWords(companyInfo[1]));
           companyIds.push(companyInfo[0]);
@@ -86,10 +69,10 @@ function updateTable() {
         }
       }
     })
-    if (companies != []) {
+    if (companies != []) {                    // if done finding companies
       cell5.innerHTML = companies;
       cell5.onclick = function() { displayCompany(companyIds[0]); };
-    } else {
+    } else {                                  // if company name clicked display info box
       cell5.innerHTML = "none"
     }
     cell6.innerHTML = item.alphaLevel;
@@ -98,9 +81,12 @@ function updateTable() {
 }
 
 function findCompany(idToFind) {
+  /*
+  finds company in json obj given the company's id
+  */
   var toReturn = []
   richPeopleData["companies"].forEach(function(company) {
-    if(company.id == idToFind) {
+    if(company.id == idToFind) {              // all the stuff related to a company
       toReturn = [company.id, company.name, company.stonks, company.employees, company.description, company.logo, company.wikiPage, company.stonksCode];
     }
   });
@@ -108,9 +94,12 @@ function findCompany(idToFind) {
 }
 
 function findCompanyByName(nameToFind) {
+  /*
+  finds a company give nthe company's name
+  */
   var toReturn = []
   richPeopleData["companies"].forEach(function(company) {
-    if(company.name == nameToFind) {
+    if(company.name == nameToFind) {          // if company's name is the name you want
       toReturn = [company.name, company.stonks, company.employees, company.description, company.logo, company.wikiPage, company.stonksCode];
     }
   });
@@ -118,6 +107,9 @@ function findCompanyByName(nameToFind) {
 }
 
 function clearTableRows() {
+  /*
+  clears the rows of the table
+  */
   var table = document.getElementById("table");
   var numRows = table.rows.length;
   while(numRows > 1) {
@@ -127,12 +119,15 @@ function clearTableRows() {
 }
 
 function capitalizeWords(words) {
-  var wordsArray = words.split(" ");
+  /*
+  Capitalize words (pretty self explanatory)
+  */
+  var wordsArray = words.split(" ");        // makes an array of each letter in str
   var stringToReturn = ""
   for(i = 0; i < wordsArray.length; i++) {
       wordsArray[i] = wordsArray[i].slice(0, 1).toUpperCase() + wordsArray[i].slice(1, wordsArray[i].length);
       stringToReturn = stringToReturn + wordsArray[i] + " "
-  }
+  }                                         // capitalize the words
   return stringToReturn.slice(0, stringToReturn.length - 1);
 }
 
