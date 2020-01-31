@@ -48,7 +48,11 @@ function updateTable() {
     var cell6 = row.insertCell(5);
     var cell7 = row.insertCell(6);
     cell1.innerHTML = item.name;
-    cell2.innerHTML = "$" + addCommasToInt(convExp(item.netWorth)) + " ($" + expToTextDescription(item.netWorth) + ")";
+    if(item.netWorth > 999) {
+      cell2.innerHTML = "$" + addCommasToInt(convExp(item.netWorth)) + " ($" + expToTextDescription(item.netWorth) + ")";
+    } else {
+      cell2.innerHTML = "$" + convExp(item.netWorth);
+    }
     cell3.innerHTML = item.occupation;
     if(item.chonkiness > 9000) {
       cell4.innerHTML = "over 9000";
@@ -239,14 +243,33 @@ function expToTextDescription(string) {
   }
   number = parseFloat(number);
   exponent = parseInt(exponent);
-  if(exponent >= 9) {
-    if(exponent >= 10) {
-      var billions = parseInt(number * (Math.pow(10, exponent % 3)));
-    } else if (exponent == 9){
-      var billions = number;
-    }
-    var string = billions + " billion"
+  moneyUnit = ""
+  if(exponent >= 10) {
+    var moneyAmount = parseInt(number * (Math.pow(10, exponent % 3)));
+    moneyUnit = "billion"
+  } else if (exponent == 9){
+    var moneyAmount = number;
+    moneyUnit = "billion";
+  } else if(exponent >= 7) {
+      var moneyAmount = parseInt(number * (Math.pow(10, exponent % 3)));
+      moneyUnit = "million"
+  } else if (exponent == 9){
+    var moneyAmount = number;
+    moneyUnit = "million";
+  } else if(exponent >= 4) {
+      var moneyAmount = parseInt(number * (Math.pow(10, exponent % 3)));
+      moneyUnit = "thousand"
+  } else if (exponent == 3){
+    var moneyAmount = number;
+    moneyUnit = "thousand";
+  } else if(exponent >= 1) {
+      var moneyAmount = parseInt(number * (Math.pow(10, exponent % 3)));
+      moneyUnit = ""
+  } else if (exponent == 0){
+    var moneyAmount = number;
+    moneyUnit = "";
   }
+      var string = moneyAmount + " " + moneyUnit
   return string
 }
 
@@ -264,7 +287,7 @@ function displayCompany(companyId) {
   inCompanyIframe = true;
   document.getElementById('moneyVideo').className = "backgroundVideo fade";
   document.getElementById('mainJumbotron').className = "jumbotron graybackground";
-  document.getElementById('companyInfo').className = "jumbotron onscreen";
+  document.getElementById('companyInfo').className = "jumbotron onscreen graybackground";
 
   var companyInfo = findCompany(companyId)
   document.getElementById('companyLogo').src = companyInfo[5];
@@ -275,6 +298,7 @@ function displayCompany(companyId) {
   document.getElementById("companyEmployees").innerHTML = "Employees: " + addCommasToInt(convExp(companyInfo[3])) + " employees";
   document.getElementById('companyDescription').innerHTML = "Description: " + companyInfo[4];
   wikipediaUrl = companyInfo[6];
+  console.log(document.getElementById('companyInfo').style.opacity)
   if(stonksCode != "N/A") {
     document.getElementById("seeStonks").className = ""
     document.getElementById("seeStonks").style.opacity = 1.0;
