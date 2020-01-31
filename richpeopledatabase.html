@@ -82,6 +82,7 @@
       }
       .graybackground {
         background-color: rgba(255, 255, 255, 0.6);
+        color: rgba(0, 0, 0, 0.6);
       }
       .whitebackground {
         background:rgba(255, 255, 255, 1);
@@ -115,7 +116,7 @@
         padding: 3px;
         font-size: 18px;
       }
-      p, h1, th, td {
+      p, a, h1, th, td {
         font-family: 'Lato'
       }
       body {
@@ -129,7 +130,7 @@
     <video autoplay muted loop class = "backgroundVideo background" id="moneyVideo" onclick = "exitCompanyWindow()">
       <source src="resources/moneyrainingv2.mp4" type="video/mp4">
     </video>
-    <div class="jumbotron whitebackground" style="position: fixed; margin-bottom: -10px; margin-left: 8px; margin-top: 8px; padding-right: 18px; padding-top: 0px; padding-bottom: 0px; padding-left: 17px;" id = "mainJumbotron">
+    <div class="jumbotron whitebackground" style="width: 115em; position: fixed; margin-bottom: -10px; margin-left: 8px; margin-top: 8px; padding-right: 18px; padding-top: 0px; padding-bottom: 0px; padding-left: 17px;" id = "mainJumbotron">
       <h1 style = "font-size:30px; margin-bottom: 5px; padding-top: 0px; margin-top: 11px;">Rich People</h1>
       <table id="table" border="1" style = "margin-left: 20px; margin-top: 10px;">
         <tr>
@@ -154,6 +155,7 @@
     <p id = "companyStonks" style = "margin-left: 30px;"></p>
     <p id = "companyEmployees" style = "margin-left: 30px;"></p>
     <p id = "companyDescription" style = "margin-left: 30px;"></p>
+    <a id = "moreInfo" onclick = "openWikiPage()" style = "color: blue; text-decoration: underline; margin-left: 30px;" href = "">More info</a>
     <p id = "exitPopup" style = "font-size: 10px; text-align: center; padding-bottom: 0px; margin-bottom: 0px;">(Click outside this popup to exit)</p>
   </div>
   </body>

@@ -1,5 +1,6 @@
 var inCompanyIframe = false;
 var sort = ""
+var wikipediaUrl = ""
 changeSort('name')
 
 function convExp(string) {
@@ -103,7 +104,7 @@ function findCompany(idToFind) {
   var toReturn = []
   richPeopleData["companies"].forEach(function(company) {
     if(company.id == idToFind) {
-      toReturn = [company.id, company.name, company.stonks, company.employees, company.description, company.logo];
+      toReturn = [company.id, company.name, company.stonks, company.employees, company.description, company.logo, company.wikiPage];
     }
   });
   return toReturn;
@@ -113,7 +114,7 @@ function findCompanyByName(nameToFind) {
   var toReturn = []
   richPeopleData["companies"].forEach(function(company) {
     if(company.name == nameToFind) {
-      toReturn = [company.name, company.stonks, company.employees, company.description, company.logo];
+      toReturn = [company.name, company.stonks, company.employees, company.description, company.logo, company.wikiPage];
     }
   });
   return toReturn;
@@ -260,10 +261,16 @@ function displayCompany(companyId) {
   document.getElementById('companyLogo').style.left = "40px";
   document.getElementById('companyLogo').style.padding = "10px";
   document.getElementById('companyLogo').className = "companyLogo center"
+
   document.getElementById("companyName").innerHTML = capitalizeWords(companyInfo[1]);
-  document.getElementById('companyStonks').innerHTML = "Stonks: $" + addCommasToInt(convExp(companyInfo[2]));
+  document.getElementById('companyStonks').innerHTML = "Stonks: $" + addCommasToInt(convExp(companyInfo[2])) + " (" + expToTextDescription(companyInfo[2]) + ")";
   document.getElementById("companyEmployees").innerHTML = "Employees: " + addCommasToInt(convExp(companyInfo[3])) + " employees";
   document.getElementById('companyDescription').innerHTML = "Description: " + companyInfo[4];
+  wikipediaUrl = companyInfo[6];
+}
+
+function openWikiPage() {
+  window.open(wikipediaUrl, '_blank');
 }
 
 function exitCompanyWindow() {
