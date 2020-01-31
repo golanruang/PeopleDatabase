@@ -190,7 +190,7 @@ function sortRows() {
       sortedArray.push(people[rowIndexes[l]]); //adds rows to sorted rows array
     }
   }
-  richPeopleData["people"] = sortedArray;
+  richPeopleData["people"] = sortedArray; //updating table to sorted table
   console.log(sortedArray)
   updateTable();
 }
