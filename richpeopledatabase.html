@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <!-- makes the webpage respond to resizing -->
+    <meta charset="UTF-8">                                                    <!-- background stuff for webpage -->
+    <link rel = "icon" href = "https://pics.clipartpng.com/midle/Wads_of_Dollars_PNG_Clipart-666.png">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link href='externalcss.css' rel='stylesheet' type='text/css'>
+    <title>Rich People Database</title>
+    <script src="data.js"></script>
+    <script defer type="text/javascript" src="rpd.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <video autoplay muted loop class = "backgroundVideo background" id="moneyVideo" onclick = "exitWindow()">
+      <source src="assets/moneyrainingv2.mp4" type="video/mp4">               <!-- making gorgeous background video of money falling -->
+    </video>
+    <div class="jumbotron whitebackground" style="position: relative; margin-bottom: -10px; margin-left: 8px; margin-top: 8px; padding-right: 30px; padding-top: 1px; down: 10px; padding-bottom: 30px; padding-left: 17px;" id = "mainJumbotron">
+      <h1 style = "font-size:30px; margin-bottom: 5px; padding-top: 0px; margin-top: 11px;">Rich People</h1>
+      <table id="table" border="1" style = "margin-left: 20px; margin-top: 10px;">
+        <tr>                                                                  <!-- table for all the info -->
+          <th id="Name" class = "cellHover" style = "width: 200px;" onclick = "changeSort('name')">Name</th>
+          <th id="Net Worth" class = "cellHover" style = "width: 280px;" onclick = "changeSort('netWorth')">Net Worth</th>
+          <th id="Occupation" class = "cellHover" style = "width: 210px;" onclick = "changeSort('occupation')">Occupation</th>
+          <th id="Chonkiness" class = "cellHover" style = "width: 100px;" onclick = "changeSort('chonkiness')">Chonkiness</th>
+          <th id="Companies" class = "cellHover" style = "width: 250px;" onclick = "changeSort('companies')">Companies</th>
+          <th id="Alpha Level" class = "cellHover" style = "width: 100px;" onclick = "changeSort('alphaLevel')">Alpha Level</th>
+          <th id="Attractiveness" class = "cellHover" style = "width: 150px;" onclick = "changeSort('attractiveness')">Attractiveness</th>
+        </tr>
+      </table>
+      <button style="margin-top:40px;" onclick="openAddPersonBox()"><h1>Add Person</h1></button> <!--buttons to open forms for adding people/companies-->
+      <button style="margin-top:40px;" onclick="openAddCompanyBox()"><h1>Add Company</h1></button>
+  </div>
+  <!--normally hidden popup window that can display a company's information-->
+  <div class="jumbotron invisible offscreen" style = "position:absolute; width:500px; background: white; padding: 10px; padding-top: 0px; margin-top: 7px; padding-left: 12px;" id = "companyInfo">
+    <img src="" class = "center companyLogo" id = "companyLogo"></img>
+    <h1 id = "companyName" style = "margin-bottom: 0px; margin-left: 10px;"></h1>
+    <p id = "companyStonks" style = "margin-left: 30px;"></p>
+    <p id = "companyEmployees" style = "margin-left: 30px;"></p>
+    <p id = "companyDescription" style = "margin-left: 30px;"></p>
+    <a class = "externalLink"><p id = "seeStonks" class = "externalLink" onclick = "openStonksPage()" style = "color: blue; text-decoration: underline; margin-left: 30px; cursor: pointer;" href = "">See real stonks</p></a>
+    <a><p id = "moreInfo" class = "externalLink" onclick = "openWikiPage()" style = "color: blue; text-decoration: underline; margin-left: 30px; margin-top: -5px;" href = "">More info</p></a>
+    <button id = "exitPopup" class = "greenButton" onclick = "exitCompanyWindow()" style = "left: 200px; position: relative;;">Exit popup</button> <!--exit button-->
+  </div>
+  <!--normally hidden popup window that contains form to add a person to database-->
+  <div class="jumbotron invisible offscreen" style = "position:absolute; width:500px; background: white; padding: 10px; padding-top: 0px; margin-top: 7px; padding-left: 12px;" id = "addPersonBox">
+    <h1 id = "addPersonHeader" style = "margin-bottom: 0px; margin-left: 10px; padding-top: 10px;">Add Person</h1>
+    <form action = "javascript: addPerson();" style = "margin-left: 30px;">
+      <p>Name: <input type="text" id="nmInput"></p>
+      <p>Net Worth: $<input type="number" id="nwInput"></p>
+      <p>Occupation: <input type="text" id="occInput"></p>
+      <p>Chonkiness: <input type="number" id="chkInput"></p>
+      <p>Companies: <input type="text" id="compInput"></p>
+      <p>Alpha Level: <input type="number" id="alInput"></p>
+      <p>Attractiveness: <input type="number" id="attInput"></p>
+      <p id = "addPersonErrorMessage"></p>
+      <input type = "submit" value = "Submit" class = "greenButton" style = "position: relative; left: 125px;">
+    </form>
+    <button id = "cancelAddPerson" class = "greenButton" onclick = "closeAddPersonBox()" style = "left: 250px; position: absolute; top: 345px; background-color: #8D0337;">Cancel</button>
+  </div>
+  <!--normallly hidden popup window that contains form to add a company to database-->
+  <div class="jumbotron invisible offscreen" style = "position:absolute; width:500px; background: white; padding: 10px; padding-top: 0px; margin-top: 7px; padding-left: 12px;" id = "addCompanyBox">
+    <h1 id = "addCompanyHeader" style = "margin-bottom: 0px; margin-left: 10px; padding-top: 10px;">Add Company</h1>
+    <form action = "javascript: addCompany();" style = "margin-left: 30px;">
+      <p>Name: <input type="text" id="nameInput"></p>
+      <p>Stonks: $<input type="number" id="stonksInput"></p>
+      <p>Employees: <input type="number" id="employeesInput"></p>
+      <p>Description: <input type="text" id="descriptionInput"></p>
+      <p>Logo Image URL: <input type="text" id="logoInput"></p>
+      <p>Info Page URL: <input type="text" id="wikiPageInput"></p>
+      <p>Stonks Code: <input type="text" id="stonksCodeInput"></p>
+      <p id = "addCompanyErrorMessage"></p>
+      <input type = "submit" value = "Submit" class = "greenButton" style = "position: relative; left: 125px;">
+    </form>
+    <button id = "cancelAddCompany" class = "greenButton" onclick = "closeAddCompanyBox()" style = "left: 250px; position: absolute; top: 345px; background-color: #8D0337;">Cancel</button>
+  </div>
+  </body>
+</html>
