@@ -4,24 +4,26 @@ Date: January 2020
 Purpose: js for richpeopledatabase; formats a bunch of stuff and accesses data from the json object
 */
 var inCompanyIframe = false;
+var inAddPersonBox = false;
+var inAddCompanyBox = false;
 var sort = ""
 var wikipediaUrl = ""
 var stonksCode;
 changeSort('name')
 
-function convExp(string) {
+function convExp(toConvert) {
   /*
   Converts num in scientific notation to regular integer notation
   */
-  var beginInt = string.substring(0,3);
+  var beginInt = toConvert.substring(0,3);
   var beginExp = "";
-  beginExp = string.substring(4,string.length) // parses it at the e in the sci notation
+  beginExp = toConvert.substring(4,toConvert.length) // parses it at the e in the sci notation
   var int = parseFloat(beginInt);              // splits it in half(1/2 int 1/2 num zeros)
   var exp = parseInt(beginExp);
   var value = int * Math.pow(10, exp);         // multiplies the decimal by how many e's it has
   var valueInt = parseInt(value)
   return valueInt;                             // returns the integer form of scientific notation
-};
+}
 
 function addCommasToInt(int) {
   /*
@@ -200,26 +202,57 @@ function sortRows() {
 }
 
 function addPerson() {                        //collecting all the information for the rich person
-  var id = Math.floor(Math.random()*90000) + 10000;
-  var nm = capitalizeWords(document.getElementById("nmInput").value);
-  var nw = intToScientificNotation(document.getElementById("nwInput").value);
-  var occ = document.getElementById("occInput").value;
-  var chk = document.getElementById("chkInput").value;
-  var comp = findCompanyByName(document.getElementById("compInput").value)[0];
-  var al = document.getElementById("alInput").value;
-  var att = document.getElementById("attInput").value;
+    var id = generateId();
+    var nm = capitalizeWords(document.getElementById("nmInput").value);
+    var nw = intToScientificNotation(document.getElementById("nwInput").value);
+    var occ = document.getElementById("occInput").value;
+    var chk = document.getElementById("chkInput").value;
+    var comp = findCompanyByName(document.getElementById("compInput").value)[0];
+    var al = document.getElementById("alInput").value;
+    var att = document.getElementById("attInput").value;
 
-  //pushing the json object of the person to the database and updating table
-  richPeopleData["people"].push({"id":id,"name":nm,"netWorth":nw,"occupation":occ,"chonkiness":chk,"companies":[comp],"alphaLevel":al,"attractiveness":att,},)
-  updateTable();
-	localStorage.setItem('richPeopleData', richPeopleData)
-  document.getElementById("nmInput").value = "";
-  document.getElementById("nwInput").value = null;
-  document.getElementById("occInput").value = "";
-  document.getElementById("chkInput").value = null;
-  document.getElementById("compInput").value = "";
-  document.getElementById("alInput").value = null;
-  document.getElementById("attInput").value = null;
+    if(nm != "") {
+      //pushing the json object of the person to the database and updating table
+      richPeopleData["people"].push({"id":id,"name":nm,"netWorth":nw,"occupation":occ,"chonkiness":chk,"companies":[comp],"alphaLevel":al,"attractiveness":att,},)
+      updateTable();
+    	localStorage.setItem('richPeopleData', richPeopleData)
+      document.getElementById("nmInput").value = "";
+      document.getElementById("nwInput").value = null;
+      document.getElementById("occInput").value = "";
+      document.getElementById("chkInput").value = null;
+      document.getElementById("compInput").value = "";
+      document.getElementById("alInput").value = null;
+      document.getElementById("attInput").value = null;
+  }
+}
+
+function addCompany() {                        //collecting all the information for the rich person
+    var id = generateId();
+    var companyName = capitalizeWords(document.getElementById("nameInput").value);
+    var companyStonks = intToScientificNotation(document.getElementById("stonksInput").value);
+    var companyEmployees = document.getElementById("employeesInput").value;
+    var companyDescription = document.getElementById("descriptionInput").value;
+    var companyLogo = document.getElementById("logoInput").value;
+    var companyInfoPage = document.getElementById("wikiPageInput").value;
+    var companyStonkCode = document.getElementById("stonksCodeInput").value;
+
+    if(companyName != "" && findCompanyByName(companyName) != []) {
+      //pushing the json object of the person to the database and updating table
+      richPeopleData["companies"].push({"id":id,"name":companyName,"stonks": companyStonks,"employees":companyEmployees,"description":companyDescription,"logo":companyLogo,"wikiPage": companyInfoPage,"stonksCode":companyStonkCode,},)
+      updateTable();
+    	localStorage.setItem('richPeopleData', richPeopleData)
+      document.getElementById("nameInput").value = "";
+      document.getElementById("stonksInput").value = null;
+      document.getElementById("employeesInput").value = null;
+      document.getElementById("descriptionInput").value = "";
+      document.getElementById("logoInput").value = "";
+      document.getElementById("wikiPageInput").value = "";
+      document.getElementById("stonksCodeInput").value = "";
+      console.log(companyName + " " + companyStonks + " stonks")
+  }
+  if (findCompanyByName(companyName) == []) {
+    document.getElementById("addCompanyErrorMessage").innerHTML = "Error: Company already in database.";
+  }
 }
 
 function expandScientificNotation(string) {
@@ -253,7 +286,7 @@ function expToTextDescription(string) {
   } else if(exponent >= 7) {
       var moneyAmount = parseInt(number * (Math.pow(10, exponent % 3)));
       moneyUnit = "million"
-  } else if (exponent == 9){
+  } else if (exponent == 6){
     var moneyAmount = number;
     moneyUnit = "million";
   } else if(exponent >= 4) {
@@ -276,7 +309,7 @@ function expToTextDescription(string) {
 function intToScientificNotation(toConvert) {
   var float = parseFloat(toConvert);
   var numTens = 0;
-  while(float > 10) {
+  while(float >= 10) {
     float = float/10;
     numTens += 1;
   }
@@ -284,27 +317,30 @@ function intToScientificNotation(toConvert) {
 }
 
 function displayCompany(companyId) {
-  inCompanyIframe = true;
-  document.getElementById('moneyVideo').className = "backgroundVideo fade";
-  document.getElementById('mainJumbotron').className = "jumbotron graybackground";
-  document.getElementById('companyInfo').className = "jumbotron onscreen graybackground";
+  if(inAddPersonBox == false && inAddCompanyBox == false) {
+    inCompanyIframe = true;
+    document.getElementById('moneyVideo').className = "backgroundVideo fade";
+    document.getElementById('mainJumbotron').className = "jumbotron graybackground";
+    document.getElementById('companyInfo').className = "jumbotron onscreen whitebackground";
 
-  var companyInfo = findCompany(companyId)
-  document.getElementById('companyLogo').src = companyInfo[5];
-  document.getElementById('companyLogo').className = "companyLogo center"
+    var companyInfo = findCompany(companyId)
+    document.getElementById('companyLogo').src = companyInfo[5];
+    document.getElementById('companyLogo').className = "companyLogo center"
 
-  document.getElementById("companyName").innerHTML = capitalizeWords(companyInfo[1]);
-  document.getElementById('companyStonks').innerHTML = "Stonks: $" + addCommasToInt(convExp(companyInfo[2])) + " ($" + expToTextDescription(companyInfo[2]) + ")";
-  document.getElementById("companyEmployees").innerHTML = "Employees: " + addCommasToInt(convExp(companyInfo[3])) + " employees";
-  document.getElementById('companyDescription').innerHTML = "Description: " + companyInfo[4];
-  wikipediaUrl = companyInfo[6];
-  console.log(document.getElementById('companyInfo').style.opacity)
-  if(stonksCode != "N/A") {
-    document.getElementById("seeStonks").className = ""
-    document.getElementById("seeStonks").style.opacity = 1.0;
-    stonksCode = companyInfo[7];
-  } else {
-    document.getElementById("seeStonks").className = "invisible"
+    document.getElementById("companyName").innerHTML = capitalizeWords(companyInfo[1]);
+    document.getElementById('companyStonks').innerHTML = "Stonks: $" + addCommasToInt(convExp(companyInfo[2])) + " ($" + expToTextDescription(companyInfo[2]) + ")";
+    document.getElementById("companyEmployees").innerHTML = "Employees: " + addCommasToInt(convExp(companyInfo[3])) + " employees";
+    document.getElementById('companyDescription').innerHTML = "Description: " + companyInfo[4];
+    wikipediaUrl = companyInfo[6];
+    console.log(document.getElementById('companyInfo').style.opacity)
+    if(stonksCode != "N/A") {
+      document.getElementById("seeStonks").className = ""
+      document.getElementById("seeStonks").style.opacity = 1.0;
+      stonksCode = companyInfo[7];
+    } else {
+      document.getElementById("seeStonks").className = "invisible"
+    }
+    closeAddPersonBox();
   }
 }
 
@@ -333,4 +369,75 @@ function exitCompanyWindow() {
     document.getElementById("companyEmployees").innerHTML = "";
     document.getElementById('companyDescription').innerHTML = "" ;
   }
+}
+
+function closeAddPersonBox() {
+  if(inAddPersonBox == true) {
+    inAddPersonBox = false;
+    document.getElementById('moneyVideo').className = "backgroundVideo background";
+    document.getElementById('mainJumbotron').className = "jumbotron whitebackground";
+    document.getElementById('addPersonBox').className = "jumbotron invisible offscreen";
+    document.getElementById("nmInput").value = "";
+    document.getElementById("nwInput").value = null;
+    document.getElementById("occInput").value = "";
+    document.getElementById("chkInput").value = null;
+    document.getElementById("compInput").value = "";
+    document.getElementById("alInput").value = null;
+    document.getElementById("attInput").value = null;
+  }
+}
+
+function closeAddCompanyBox() {
+  if(inAddCompanyBox == true) {
+    inAddCompanyBox = false;
+    document.getElementById('moneyVideo').className = "backgroundVideo background";
+    document.getElementById('mainJumbotron').className = "jumbotron whitebackground";
+    document.getElementById('addCompanyBox').className = "jumbotron invisible offscreen";
+    document.getElementById("nameInput").value = "";
+    document.getElementById("stonksInput").value = null;
+    document.getElementById("employeesInput").value = null;
+    document.getElementById("descriptionInput").value = "";
+    document.getElementById("logoInput").value = "";
+    document.getElementById("wikiPageInput").value = "";
+    document.getElementById("stonksCodeInput").value = "";
+  }
+}
+
+function generateId() {
+  var id = Math.floor(Math.random()*90000) + 10000;
+  while(findCompany(id) == []) {
+    id = Math.floor(Math.random()*90000) + 10000;
+  }
+  return id;
+}
+
+function openAddPersonBox() {
+  exitWindow()
+  inAddPersonBox = true;
+  document.getElementById('moneyVideo').className = "backgroundVideo fade";
+  document.getElementById('mainJumbotron').className = "jumbotron graybackground";
+  document.getElementById('addPersonBox').className = "jumbotron onscreen whitebackground";
+  addPerson();
+}
+
+function openAddCompanyBox() {
+  exitWindow()
+  inAddCompanyBox = true;
+  document.getElementById('moneyVideo').className = "backgroundVideo fade";
+  document.getElementById('mainJumbotron').className = "jumbotron graybackground";
+  document.getElementById('addCompanyBox').className = "jumbotron onscreen whitebackground";
+  addCompany();
+}
+
+function exitWindow() {
+  if(inAddPersonBox == true) {
+    closeAddPersonBox();
+  }
+  if (inCompanyIframe == true) {
+    exitCompanyWindow();
+  }
+  if (inAddCompanyBox == true) {
+    closeAddCompanyBox();
+  }
+  console.log("reaches here")
 }
