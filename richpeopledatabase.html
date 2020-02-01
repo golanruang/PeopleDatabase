@@ -15,7 +15,7 @@
   </head>
   <body>
     <video autoplay muted loop class = "backgroundVideo background" id="moneyVideo" onclick = "exitWindow()">
-      <source src="assets/moneyrainingv2.mp4" type="video/mp4">               <!-- making gorgeous background -->
+      <source src="assets/moneyrainingv2.mp4" type="video/mp4">               <!-- making gorgeous background video of money falling -->
     </video>
     <div class="jumbotron whitebackground" style="position: relative; margin-bottom: -10px; margin-left: 8px; margin-top: 8px; padding-right: 30px; padding-top: 1px; down: 10px; padding-bottom: 30px; padding-left: 17px;" id = "mainJumbotron">
       <h1 style = "font-size:30px; margin-bottom: 5px; padding-top: 0px; margin-top: 11px;">Rich People</h1>
@@ -30,9 +30,10 @@
           <th id="Attractiveness" class = "cellHover" style = "width: 150px;" onclick = "changeSort('attractiveness')">Attractiveness</th>
         </tr>
       </table>
-      <button style="margin-top:40px;" onclick="openAddPersonBox()"><h1>Add Person</h1></button>
+      <button style="margin-top:40px;" onclick="openAddPersonBox()"><h1>Add Person</h1></button> <!--buttons to open forms for adding people/companies-->
       <button style="margin-top:40px;" onclick="openAddCompanyBox()"><h1>Add Company</h1></button>
   </div>
+  <!--normally hidden popup window that can display a company's information-->
   <div class="jumbotron invisible offscreen" style = "position:absolute; width:500px; background: white; padding: 10px; padding-top: 0px; margin-top: 7px; padding-left: 12px;" id = "companyInfo">
     <img src="" class = "center companyLogo" id = "companyLogo"></img>
     <h1 id = "companyName" style = "margin-bottom: 0px; margin-left: 10px;"></h1>
@@ -41,8 +42,9 @@
     <p id = "companyDescription" style = "margin-left: 30px;"></p>
     <a class = "externalLink"><p id = "seeStonks" class = "externalLink" onclick = "openStonksPage()" style = "color: blue; text-decoration: underline; margin-left: 30px; cursor: pointer;" href = "">See real stonks</p></a>
     <a><p id = "moreInfo" class = "externalLink" onclick = "openWikiPage()" style = "color: blue; text-decoration: underline; margin-left: 30px; margin-top: -5px;" href = "">More info</p></a>
-    <button id = "exitPopup" class = "greenButton" onclick = "exitCompanyWindow()" style = "left: 200px; position: relative;;">Exit popup</button>
+    <button id = "exitPopup" class = "greenButton" onclick = "exitCompanyWindow()" style = "left: 200px; position: relative;;">Exit popup</button> <!--exit button-->
   </div>
+  <!--normally hidden popup window that contains form to add a person to database-->
   <div class="jumbotron invisible offscreen" style = "position:absolute; width:500px; background: white; padding: 10px; padding-top: 0px; margin-top: 7px; padding-left: 12px;" id = "addPersonBox">
     <h1 id = "addPersonHeader" style = "margin-bottom: 0px; margin-left: 10px; padding-top: 10px;">Add Person</h1>
     <form action = "javascript: addPerson();" style = "margin-left: 30px;">
@@ -56,8 +58,9 @@
       <p id = "addPersonErrorMessage"></p>
       <input type = "submit" value = "Submit" class = "greenButton" style = "position: relative; left: 125px;">
     </form>
-    <button id = "cancelAddPerson" class = "greenButton" onclick = "closeAddPersonBox()" style = "left: 250px; position: absolute; top: 345px; background-color: #8D0337;">Exit popup</button>
+    <button id = "cancelAddPerson" class = "greenButton" onclick = "closeAddPersonBox()" style = "left: 250px; position: absolute; top: 345px; background-color: #8D0337;">Cancel</button>
   </div>
+  <!--normallly hidden popup window that contains form to add a company to database-->
   <div class="jumbotron invisible offscreen" style = "position:absolute; width:500px; background: white; padding: 10px; padding-top: 0px; margin-top: 7px; padding-left: 12px;" id = "addCompanyBox">
     <h1 id = "addCompanyHeader" style = "margin-bottom: 0px; margin-left: 10px; padding-top: 10px;">Add Company</h1>
     <form action = "javascript: addCompany();" style = "margin-left: 30px;">
@@ -71,7 +74,7 @@
       <p id = "addCompanyErrorMessage"></p>
       <input type = "submit" value = "Submit" class = "greenButton" style = "position: relative; left: 125px;">
     </form>
-    <button id = "cancelAddCompany" class = "greenButton" onclick = "closeAddCompanyBox()" style = "left: 250px; position: absolute; top: 345px; background-color: #8D0337;">Exit popup</button>
+    <button id = "cancelAddCompany" class = "greenButton" onclick = "closeAddCompanyBox()" style = "left: 250px; position: absolute; top: 345px; background-color: #8D0337;">Cancel</button>
   </div>
   </body>
 </html>

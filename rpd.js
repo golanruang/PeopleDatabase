@@ -3,13 +3,13 @@ Author: Lots of people
 Date: January 2020
 Purpose: js for richpeopledatabase; formats a bunch of stuff and accesses data from the json object
 */
-var inCompanyIframe = false;
+var inCompanyIframe = false; /*variables tracking whether webpage is in one of three popup window types*/
 var inAddPersonBox = false;
 var inAddCompanyBox = false;
-var sort = ""
-var wikipediaUrl = ""
-var stonksCode;
-changeSort('name')
+var sort = "" /*variable tracking by which category database is being sorted*/
+var wikipediaUrl = "" /*due to jank with window.open, have to store wikipediaUrl as variable and open it in a separate function*/
+var stonksCode; /*same story as last variable*/
+changeSort('name') /*default sets to sort by name, first creates table*/
 
 function convExp(toConvert) {
   /*
@@ -50,20 +50,20 @@ function updateTable() {
     var cell6 = row.insertCell(5);
     var cell7 = row.insertCell(6);
     cell1.innerHTML = item.name;
-    if(item.netWorth > 999) {
+    if(item.netWorth > 999) { /* rich people */
       cell2.innerHTML = "$" + addCommasToInt(convExp(item.netWorth)) + " ($" + expToTextDescription(item.netWorth) + ")";
-    } else {
+    } else { /* not rich people */
       cell2.innerHTML = "$" + convExp(item.netWorth);
     }
     cell3.innerHTML = item.occupation;
-    if(item.chonkiness > 9000) {
+    if(item.chonkiness > 9000) { /* don't know why but they wanted it */
       cell4.innerHTML = "over 9000";
     } else {
       cell4.innerHTML = item.chonkiness;
     }
     var companies = [];
     var companyIds = [];
-    item.companies.forEach(function(item) {
+    item.companies.forEach(function(item) { /* since company stored by ID, have to find company name + info here */
       var companyInfo = findCompany(item);    // find the company corresponding to a rich person
       if(companyInfo != "") {                 // add the info + format it
         if(companies.length >= 0) {
@@ -126,7 +126,7 @@ function clearTableRows() {
 
 function capitalizeWords(words) {
   /*
-  Capitalize words (pretty self explanatory)
+  Capitalizes first letter of each word (pretty self explanatory)
   */
   var wordsArray = words.split(" ");        // makes an array of each letter in str
   var stringToReturn = ""
@@ -138,6 +138,7 @@ function capitalizeWords(words) {
 }
 
 function changeSort(newSort) {
+  /* exactly what it says it does */
   sort = newSort;
   sortRows();
 }
@@ -201,8 +202,9 @@ function sortRows() {
 }
 
 function addPerson() {                        //collecting all the information for the rich person
+    /*adds a new person to the array of people, checking if person is valid and if their company is in database*/
     var id = generateId();
-    var nm = capitalizeWords(document.getElementById("nmInput").value);
+    var nm = capitalizeWords(document.getElementById("nmInput").value); /*getting data from the input boxes in the form*/
     var nw = intToScientificNotation(document.getElementById("nwInput").value);
     var occ = document.getElementById("occInput").value;
     var chk = document.getElementById("chkInput").value;
@@ -210,7 +212,7 @@ function addPerson() {                        //collecting all the information f
     var al = document.getElementById("alInput").value;
     var att = document.getElementById("attInput").value;
 
-    if(nm != "" && findCompanyByName(document.getElementById("compInput").value).length != 0) {
+    if(nm != "" && findCompanyByName(document.getElementById("compInput").value).length != 0) { /*person has a name, company exists in database*/
       //pushing the json object of the person to the database and updating table
       richPeopleData["people"].push({"id":id,"name":nm,"netWorth":nw,"occupation":occ,"chonkiness":chk,"companies":[comp],"alphaLevel":al,"attractiveness":att,},)
       updateTable();
@@ -231,8 +233,9 @@ function addPerson() {                        //collecting all the information f
 }
 
 function addCompany() {                        //collecting all the information for the rich person
+    /*adds a new company to the array of people, checking if company is valid and if it already exists in database*/
     var id = generateId();
-    var companyName = capitalizeWords(document.getElementById("nameInput").value);
+    var companyName = capitalizeWords(document.getElementById("nameInput").value); /*again, gets data from input boxes in form*/
     var companyStonks = intToScientificNotation(document.getElementById("stonksInput").value);
     var companyEmployees = intToScientificNotation(document.getElementById("employeesInput").value);
     var companyDescription = document.getElementById("descriptionInput").value;
@@ -240,7 +243,7 @@ function addCompany() {                        //collecting all the information 
     var companyInfoPage = document.getElementById("wikiPageInput").value;
     var companyStonkCode = document.getElementById("stonksCodeInput").value;
 
-    if(companyName != "" && findCompanyByName(companyName).length == 0) {
+    if(companyName != "" && findCompanyByName(companyName).length == 0) { /*company does not already exist in database, has a name*/
       //pushing the json object of the person to the database and updating table
       richPeopleData["companies"].push({"id":id,"name":companyName,"stonks": companyStonks,"employees":companyEmployees,"description":companyDescription,"logo":companyLogo,"wikiPage": companyInfoPage,"stonksCode":companyStonkCode,},)
       updateTable();
@@ -261,6 +264,7 @@ function addCompany() {                        //collecting all the information 
 }
 
 function expandScientificNotation(string) {
+  /*expands scientific notation from using e(power of ten) to using 10^exponent*/
   if(string.substring(3, 4) == 'e') {
     var number = string.substring(0, 3);
     var exponent = string.substring(4);
@@ -272,17 +276,18 @@ function expandScientificNotation(string) {
 }
 
 function expToTextDescription(string) {
-  if(string.substring(3, 4) == 'e') {
+  /*converts scientific notation to a text description (e.g. 10 billion)*/
+  if(string.substring(3, 4) == 'e') { /* formatted good */
     var number = string.substring(0, 3);
     var exponent = string.substring(4);
-  } else {
+  } else { /* you didn't follow my formatting so I'm going to assume what you did */
     var number = string.substring(0, 1);
     var exponent = string.substring(2);
   }
   number = parseFloat(number);
   exponent = parseInt(exponent);
   moneyUnit = ""
-  if(exponent >= 10) {
+  if(exponent >= 10) { /* janky set of if statements to determine what the string should say*/
     var moneyAmount = parseInt(number * (Math.pow(10, exponent % 3)));
     moneyUnit = "billion"
   } else if (exponent == 9){
@@ -312,6 +317,7 @@ function expToTextDescription(string) {
 }
 
 function intToScientificNotation(toConvert) {
+  /* converts an integer to scientific notation */
   var float = parseFloat(toConvert);
   var numTens = 0;
   while(float >= 10) {
@@ -322,22 +328,23 @@ function intToScientificNotation(toConvert) {
 }
 
 function displayCompany(companyId) {
+  /* opens company pop-up window and displays information about company on it */
   if(inAddPersonBox == false && inAddCompanyBox == false) {
     inCompanyIframe = true;
     document.getElementById('moneyVideo').className = "backgroundVideo fade";
-    document.getElementById('mainJumbotron').className = "jumbotron graybackground";
+    document.getElementById('mainJumbotron').className = "jumbotron graybackground"; /*makes everything else fade out, pop-up appears*/
     document.getElementById('companyInfo').className = "jumbotron onscreen whitebackground";
 
     var companyInfo = findCompany(companyId)
     document.getElementById('companyLogo').src = companyInfo[5];
-    document.getElementById('companyLogo').className = "companyLogo center"
+    document.getElementById('companyLogo').className = "companyLogo center" /*displays company logo*/
 
     document.getElementById("companyName").innerHTML = capitalizeWords(companyInfo[1]);
     document.getElementById('companyStonks').innerHTML = "Stonks: $" + addCommasToInt(convExp(companyInfo[2])) + " ($" + expToTextDescription(companyInfo[2]) + ")";
     document.getElementById("companyEmployees").innerHTML = "Employees: " + addCommasToInt(convExp(companyInfo[3])) + " employees";
     document.getElementById('companyDescription').innerHTML = "Description: " + companyInfo[4];
     wikipediaUrl = companyInfo[6];
-    if(stonksCode != "N/A") {
+    if(stonksCode != "N/A") { /*don't know if this works but it probably should (we aren't using it anyway)*/
       document.getElementById("seeStonks").className = ""
       document.getElementById("seeStonks").style.opacity = 1.0;
       stonksCode = companyInfo[7];
@@ -349,10 +356,12 @@ function displayCompany(companyId) {
 }
 
 function openWikiPage() {
+  /*lol*/
   window.open(wikipediaUrl, '_blank');
 }
 
 function openStonksPage() {
+  /*guess what it does*/
   if(stonksCode.substring(0, 4) != "http" && stonksCode != "N/A") {
     window.open("https://finance.yahoo.com/quote/" + stonksCode, '_blank');
   } else if(stonksCode.substring(0, 4) == "http") {
@@ -361,9 +370,10 @@ function openStonksPage() {
 }
 
 function exitCompanyWindow() {
+  /*exactly what the function title says it does*/
   if(inCompanyIframe == true) {
     inCompanyIframe = false;
-    document.getElementById('moneyVideo').className = "backgroundVideo background";
+    document.getElementById('moneyVideo').className = "backgroundVideo background"; /*makes background/table prominent again, makes popup invisible and hides it*/
     document.getElementById('mainJumbotron').className = "jumbotron whitebackground";
     document.getElementById('companyInfo').className = "jumbotron invisible offscreen";
 
@@ -376,9 +386,10 @@ function exitCompanyWindow() {
 }
 
 function closeAddPersonBox() {
+  /*guess what this does*/
   if(inAddPersonBox == true) {
     inAddPersonBox = false;
-    document.getElementById('moneyVideo').className = "backgroundVideo background";
+    document.getElementById('moneyVideo').className = "backgroundVideo background"; /*makes background/table prominent again, makes popup w/form invisible and hides it*/
     document.getElementById('mainJumbotron').className = "jumbotron whitebackground";
     document.getElementById('addPersonBox').className = "jumbotron invisible offscreen";
     document.getElementById("nmInput").value = "";
@@ -394,9 +405,10 @@ function closeAddPersonBox() {
 }
 
 function closeAddCompanyBox() {
+  /*hmmmmmm (see above)*/
   if(inAddCompanyBox == true) {
     inAddCompanyBox = false;
-    document.getElementById('moneyVideo').className = "backgroundVideo background";
+    document.getElementById('moneyVideo').className = "backgroundVideo background"; /*makes background/table prominent again, makes popup w/ form invisible and hides it*/
     document.getElementById('mainJumbotron').className = "jumbotron whitebackground";
     document.getElementById('addCompanyBox').className = "jumbotron invisible offscreen";
     document.getElementById("nameInput").value = "";
@@ -412,6 +424,7 @@ function closeAddCompanyBox() {
 }
 
 function generateId() {
+  /* generates a randomized ID for a company */
   var id = Math.floor(Math.random()*90000) + 10000;
   while(findCompany(id) == []) {
     id = Math.floor(Math.random()*90000) + 10000;
@@ -420,24 +433,27 @@ function generateId() {
 }
 
 function openAddPersonBox() {
-  exitWindow()
+  /* opens popup with form for adding person */
+  exitWindow() //closes other windows and pop-ups
   inAddPersonBox = true;
-  document.getElementById('moneyVideo').className = "backgroundVideo fade";
+  document.getElementById('moneyVideo').className = "backgroundVideo fade"; //makes other stuff fade out, popup appears
   document.getElementById('mainJumbotron').className = "jumbotron graybackground";
   document.getElementById('addPersonBox').className = "jumbotron onscreen whitebackground";
   addPerson();
 }
 
 function openAddCompanyBox() {
+  /* see above, but replace "person" with "company" */
   exitWindow()
   inAddCompanyBox = true;
-  document.getElementById('moneyVideo').className = "backgroundVideo fade";
+  document.getElementById('moneyVideo').className = "backgroundVideo fade"; //makes other stuff fade out, popup appaers
   document.getElementById('mainJumbotron').className = "jumbotron graybackground";
   document.getElementById('addCompanyBox').className = "jumbotron onscreen whitebackground";
   addCompany();
 }
 
 function exitWindow() {
+  /*closes everything*/
   if(inAddPersonBox == true) {
     closeAddPersonBox();
   }

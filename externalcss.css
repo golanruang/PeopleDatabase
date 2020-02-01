@@ -71,7 +71,7 @@
   opacity: 0.5;
 }
 .fade {
-  opacity: 0.25;
+  opacity: 0.25; /*it's pretty lazy but it works*/
 }
 .companyLogo {
   width: 400px;
@@ -110,7 +110,7 @@
 .externalLink {
   cursor: pointer;
 }
-input[type="checkbox"]:not(:checked) + .slider {
+input[type="checkbox"]:not(:checked) + .slider { /*various slider and switch classes because why not*/
   background-color:  #4d4d4d;
 }
 input:checked + .slider {
@@ -136,11 +136,11 @@ th, td {
   padding: 3px;
   font-size: 18px;
 }
-p, a, h1, th, td {
+p, a, h1, th, td { /* Lato = best font */
   font-family: 'Lato'
 }
 body {
-  /*background-image: url(resources/donaldtrump.jpg);*/
+  /*background-image: url(resources/donaldtrump.jpg); commented out because nobody wants to look at his face*/
   background-repeat: no-repeat;
   background-size: cover;
 }
