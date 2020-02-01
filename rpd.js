@@ -197,7 +197,6 @@ function sortRows() {
     }
   }
   richPeopleData["people"] = sortedArray;     //updating table to sorted table
-  console.log(sortedArray)
   updateTable();
 }
 
@@ -211,7 +210,7 @@ function addPerson() {                        //collecting all the information f
     var al = document.getElementById("alInput").value;
     var att = document.getElementById("attInput").value;
 
-    if(nm != "") {
+    if(nm != "" && findCompanyByName(document.getElementById("compInput").value).length != 0) {
       //pushing the json object of the person to the database and updating table
       richPeopleData["people"].push({"id":id,"name":nm,"netWorth":nw,"occupation":occ,"chonkiness":chk,"companies":[comp],"alphaLevel":al,"attractiveness":att,},)
       updateTable();
@@ -223,6 +222,11 @@ function addPerson() {                        //collecting all the information f
       document.getElementById("compInput").value = "";
       document.getElementById("alInput").value = null;
       document.getElementById("attInput").value = null;
+      document.getElementById("addPersonErrorMessage").innerHTML = "";
+      document.getElementById("cancelAddPerson").style.top = "345px";
+  } else if (findCompanyByName(document.getElementById("compInput").value).length == 0 && nm != "") {
+    document.getElementById("addPersonErrorMessage").innerHTML = "Error: Company does not exist in database"
+    document.getElementById("cancelAddPerson").style.top = "379px";
   }
 }
 
@@ -230,13 +234,13 @@ function addCompany() {                        //collecting all the information 
     var id = generateId();
     var companyName = capitalizeWords(document.getElementById("nameInput").value);
     var companyStonks = intToScientificNotation(document.getElementById("stonksInput").value);
-    var companyEmployees = document.getElementById("employeesInput").value;
+    var companyEmployees = intToScientificNotation(document.getElementById("employeesInput").value);
     var companyDescription = document.getElementById("descriptionInput").value;
     var companyLogo = document.getElementById("logoInput").value;
     var companyInfoPage = document.getElementById("wikiPageInput").value;
     var companyStonkCode = document.getElementById("stonksCodeInput").value;
 
-    if(companyName != "" && findCompanyByName(companyName) != []) {
+    if(companyName != "" && findCompanyByName(companyName).length == 0) {
       //pushing the json object of the person to the database and updating table
       richPeopleData["companies"].push({"id":id,"name":companyName,"stonks": companyStonks,"employees":companyEmployees,"description":companyDescription,"logo":companyLogo,"wikiPage": companyInfoPage,"stonksCode":companyStonkCode,},)
       updateTable();
@@ -248,10 +252,11 @@ function addCompany() {                        //collecting all the information 
       document.getElementById("logoInput").value = "";
       document.getElementById("wikiPageInput").value = "";
       document.getElementById("stonksCodeInput").value = "";
-      console.log(companyName + " " + companyStonks + " stonks")
-  }
-  if (findCompanyByName(companyName) == []) {
+      document.getElementById("addCompanyErrorMessage").innerHTML = "";
+      document.getElementById("cancelAddCompany").style.top = "345px";
+  } else if (findCompanyByName(companyName).length != 0 && companyName != "") {
     document.getElementById("addCompanyErrorMessage").innerHTML = "Error: Company already in database.";
+    document.getElementById("cancelAddCompany").style.top = '379px';
   }
 }
 
@@ -332,7 +337,6 @@ function displayCompany(companyId) {
     document.getElementById("companyEmployees").innerHTML = "Employees: " + addCommasToInt(convExp(companyInfo[3])) + " employees";
     document.getElementById('companyDescription').innerHTML = "Description: " + companyInfo[4];
     wikipediaUrl = companyInfo[6];
-    console.log(document.getElementById('companyInfo').style.opacity)
     if(stonksCode != "N/A") {
       document.getElementById("seeStonks").className = ""
       document.getElementById("seeStonks").style.opacity = 1.0;
@@ -384,6 +388,8 @@ function closeAddPersonBox() {
     document.getElementById("compInput").value = "";
     document.getElementById("alInput").value = null;
     document.getElementById("attInput").value = null;
+    document.getElementById("addPersonErrorMessage").innerHTML = "";
+    document.getElementById("cancelAddPerson").style.top = '345px';
   }
 }
 
@@ -400,6 +406,8 @@ function closeAddCompanyBox() {
     document.getElementById("logoInput").value = "";
     document.getElementById("wikiPageInput").value = "";
     document.getElementById("stonksCodeInput").value = "";
+    document.getElementById("addCompanyErrorMessage").innerHTML = "";
+    document.getElementById("cancelAddCompany").style.top = '345px';
   }
 }
 
@@ -439,5 +447,4 @@ function exitWindow() {
   if (inAddCompanyBox == true) {
     closeAddCompanyBox();
   }
-  console.log("reaches here")
 }

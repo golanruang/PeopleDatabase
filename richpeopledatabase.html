@@ -53,9 +53,10 @@
       <p>Companies: <input type="text" id="compInput"></p>
       <p>Alpha Level: <input type="number" id="alInput"></p>
       <p>Attractiveness: <input type="number" id="attInput"></p>
+      <p id = "addPersonErrorMessage"></p>
       <input type = "submit" value = "Submit" class = "greenButton" style = "position: relative; left: 125px;">
     </form>
-    <button id = "cancelButton" class = "greenButton" onclick = "closeAddPersonBox()" style = "left: 250px; position: absolute; top: 345px; background-color: #8D0337;">Exit popup</button>
+    <button id = "cancelAddPerson" class = "greenButton" onclick = "closeAddPersonBox()" style = "left: 250px; position: absolute; top: 345px; background-color: #8D0337;">Exit popup</button>
   </div>
   <div class="jumbotron invisible offscreen" style = "position:absolute; width:500px; background: white; padding: 10px; padding-top: 0px; margin-top: 7px; padding-left: 12px;" id = "addCompanyBox">
     <h1 id = "addCompanyHeader" style = "margin-bottom: 0px; margin-left: 10px; padding-top: 10px;">Add Company</h1>
@@ -70,7 +71,7 @@
       <p id = "addCompanyErrorMessage"></p>
       <input type = "submit" value = "Submit" class = "greenButton" style = "position: relative; left: 125px;">
     </form>
-    <button id = "cancelButton" class = "greenButton" onclick = "closeAddCompanyBox()" style = "left: 250px; position: absolute; top: 345px; background-color: #8D0337;">Exit popup</button>
+    <button id = "cancelAddCompany" class = "greenButton" onclick = "closeAddCompanyBox()" style = "left: 250px; position: absolute; top: 345px; background-color: #8D0337;">Exit popup</button>
   </div>
   </body>
 </html>
